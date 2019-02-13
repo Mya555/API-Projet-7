@@ -2,18 +2,25 @@
 
 namespace App\Controller;
 
+use App\Entity\Product;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProductController extends AbstractController
 {
     /**
-     * @Route("/product", name="product")
+     * @Rest\Get(
+     *     path = "/product/{id}",
+     *     name="show_product",
+     *     requirements = {"id"="\d+"}
+     * )
+     * @Rest\View
+     * @param Product $product
+     * @return Product
      */
-    public function index()
+    public function showProduct(Product $product)
     {
-        return $this->render('product/index.html.twig', [
-            'controller_name' => 'ProductController',
-        ]);
+        return $product;
     }
 }
