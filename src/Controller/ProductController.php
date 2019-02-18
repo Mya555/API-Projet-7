@@ -10,6 +10,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use FOS\RestBundle\Request\ParamFetcherInterface;
+use App\Representation\Products;
 
 class ProductController extends AbstractController
 {
@@ -56,10 +57,10 @@ class ProductController extends AbstractController
      * )
      * @Rest\View
      * @param ParamFetcherInterface $paramFetcher
-     * @return
+     * @return Products
      */
     public function listProduct(ParamFetcherInterface $paramFetcher){
-        //$product = $this->getDoctrine()->getRepository(Product::class)->findAll();
+        //$product = $this->getDoctrine()->getRepository(Products::class)->findAll();
         //return $product;
         $pager = $this->getDoctrine()->getRepository(Product::class)->search(
             $paramFetcher->get('keyword'),
@@ -67,6 +68,6 @@ class ProductController extends AbstractController
             $paramFetcher->get('limit'),
             $paramFetcher->get('offset')
         );
-        return $pager->getCurrentPageResults();
+        return new Products($pager);
     }
 }
