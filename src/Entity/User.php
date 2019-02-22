@@ -1,57 +1,27 @@
 <?php
+
+
 namespace App\Entity;
+
+use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+
 /**
- * @ORM\Table(name="users")
  * @ORM\Entity
+ * @ORM\Table(name="fos_user")
  */
-class User implements UserInterface
+class User extends BaseUser
 {
     /**
-     * @ORM\Column(type="integer")
      * @ORM\Id
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
-    /**
-     * @ORM\Column(type="string", length=25, unique=true)
-     */
-    private $username;
-    /**
-     * @ORM\Column(type="string", length=500)
-     */
-    private $password;
-    /**
-     * @ORM\Column(name="is_active", type="boolean")
-     */
-    private $isActive;
-    public function __construct($username)
+    protected $id;
+
+    public function __construct()
     {
-        $this->isActive = true;
-        $this->username = $username;
-    }
-    public function getUsername()
-    {
-        return $this->username;
-    }
-    public function getSalt()
-    {
-        return null;
-    }
-    public function getPassword()
-    {
-        return $this->password;
-    }
-    public function setPassword($password)
-    {
-        $this->password = $password;
-    }
-    public function getRoles()
-    {
-        return array('ROLE_USER');
-    }
-    public function eraseCredentials()
-    {
+        parent::__construct();
+        // your own logic
     }
 }

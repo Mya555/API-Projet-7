@@ -1,10 +1,13 @@
 
 security:
     encoders:
-        App\Entity\User:
-            algorithm: bcrypt
-
+        FOS\UserBundle\Model\UserInterface: bcrypt
+    role_hierarchy:
+        ROLE_READER: ROLE_USER
+        ROLE_ADMIN: ROLE_READER
     providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username_email
         entity_provider:
             entity:
                 class: App\Entity\User
@@ -18,11 +21,21 @@ security:
             pattern:  ^/login
             stateless: true
             anonymous: true
-            json_login:
+            provider: fos_userbundle
+            form_login:
                 check_path: /login_check
+                username_parameter: _username
+                password_parameter: _password
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
-
+                require_previous_session: false
+            logout:       true
+        main:
+            pattern: ^/
+            provider: fos_userbundle
+            stateless: true
+            anonymous: true
+            lexik_jwt: ~
         register:
             pattern:  ^/register
             stateless: true
@@ -38,6 +51,5 @@ security:
                     - lexik_jwt_authentication.jwt_token_authenticator
 
     access_control:
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: [ ROLE_USER ] }

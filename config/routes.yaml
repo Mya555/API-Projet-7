@@ -1,10 +1,6 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
-register:
-    path: /register
-    controller: App\Controller\AuthController::register
-    methods: POST
 
 api:
     path: /api
@@ -13,3 +9,14 @@ api:
 login_check:
     path: /login_check
     methods: [POST]
+
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /profile
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
