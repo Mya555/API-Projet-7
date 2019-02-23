@@ -12,12 +12,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use App\Representation\Products;
 
+
 class ProductController extends AbstractController
 {
     /**
      * @Rest\Get(
      *     path = "/product/{id}",
-     *     name="show_product",
+     *     name="product_show",
      *     requirements = {"id"="\d+"}
      * )
      * @Rest\View
@@ -30,7 +31,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Rest\Get("/product", name="list_product")
+     * @Rest\Get("/product_list", name="product_list")
      * @Rest\QueryParam(
      *     name="keyword",
      *     requirements="[a-zA-Z0-9]",

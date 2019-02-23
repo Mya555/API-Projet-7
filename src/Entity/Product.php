@@ -6,11 +6,32 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
+use Hateoas\Configuration\Annotation as Hateoas;
 
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
  * @ExclusionPolicy("all")
+ * @Hateoas\Relation(
+ *     "authenticated_user",
+ *     embedded = @Hateoas\Embedded("expr(service('security.token_storage').getToken().getUser())")
+ * )
+ * @Hateoas\Relation(
+ *     "list",
+ *     href=@Hateoas\Route(
+ *     "product_list",
+ *     absolute = true
+ *     )
+ * )
+ *
+ * @Hateoas\Relation(
+ *     "self",
+ *     href=@Hateoas\Route(
+ *     "product_show",
+ *     parameters={ "id" = "expr(object.getId())"},
+ *     absolute = true
+ *     )
+ * )
  */
 class Product
 {

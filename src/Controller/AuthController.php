@@ -21,7 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AuthController extends AbstractController
 {
     /**
-     * @Rest\Get("/list_user", name="list_user")
+     * @Rest\Get("/user_list", name="user_list")
      * @Rest\QueryParam(
      *     name="keyword",
      *     requirements="[a-zA-Z0-9]",
