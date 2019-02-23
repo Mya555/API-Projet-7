@@ -12,11 +12,22 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method User[]    findAll()
  * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserRepository extends ServiceEntityRepository
+class UserRepository extends AbstractRepository
 {
-    public function __construct(RegistryInterface $registry)
+    public function search($term, $order = 'asc', $limit = 20, $offset = 0)
     {
-        parent::__construct($registry, User::class);
+        $qb = $this
+            ->createQueryBuilder('a')
+            ->select('a')
+            ->orderBy('a.username', $order)
+        ;
+        if ($term) {
+            $qb
+                ->where('a.username LIKE ?1')
+                ->setParameter(1, '%'.$term.'%')
+            ;
+        }
+        return $this->paginate($qb, $limit, $offset);
     }
 
     // /**
