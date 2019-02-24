@@ -4,7 +4,6 @@ security:
         FOS\UserBundle\Model\UserInterface: bcrypt
     role_hierarchy:
         ROLE_READER: ROLE_USER
-        ROLE_ADMIN: ROLE_READER
     providers:
         fos_userbundle:
             id: fos_user.user_provider.username_email
@@ -36,8 +35,10 @@ security:
             stateless: true
             anonymous: true
             lexik_jwt: ~
+            logout: ~
 
 
     access_control:
         - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: [ ROLE_USER ] }

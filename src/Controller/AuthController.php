@@ -20,8 +20,22 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AuthController extends AbstractController
 {
+
     /**
-     * @Rest\Get("/user_list", name="user_list")
+     * @Rest\Get(
+     *     path = "/user/{id}",
+     *     name="user_show",
+     *     requirements = {"id"="\d+"}
+     * )
+     * @Rest\View
+     * @param User $user
+     * @return User
+     */
+    public function showUser(User $user){
+        return $user;
+    }
+    /**
+     * @Rest\Get("/list_user", name="list_user")
      * @Rest\QueryParam(
      *     name="keyword",
      *     requirements="[a-zA-Z0-9]",
@@ -64,7 +78,7 @@ class AuthController extends AbstractController
     /**
      * @Rest\Delete(
      *     path="/delete_user/{id}",
-     *     name="user_delete",
+     *     name="delete_user",
      *     requirements={"id" = "\d+"}
      *     )
      * @param User $user

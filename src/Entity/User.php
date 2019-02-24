@@ -19,7 +19,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *     "list",
  *     href=@Hateoas\Route(
- *     "user_list",
+ *     "list_user",
  *     absolute = true
  *     )
  * )
@@ -33,19 +33,19 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *     "delete",
  *     href=@Hateoas\Route(
- *     "user_delete",
+ *     "delete_user",
  *     parameters={ "id" = "expr(object.getId())"},
  *     absolute = true
  *     )
  * )
  * @Hateoas\Relation(
  *     "active_profile",
- *     href="expr('http://localhost:8000/user_active_profile')"
+ *     href="expr('http://localhost:8000/active_profile_user')"
  *     )
  * )
  * @Hateoas\Relation(
- *     "registration",
- *     href="expr('http://localhost:8000/user_register')"
+ *     "register",
+ *     href="expr('http://localhost:8000/register')"
  *     )
  * )
  */
