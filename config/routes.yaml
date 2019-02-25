@@ -14,8 +14,7 @@ fos_user_register:
     resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
     prefix: /register
 
-app.swagger:
-    path: /api/doc.json
+app.swagger_ui:
+    path: /api/doc
     methods: GET
-    defaults: { _controller: nelmio_api_doc.controller.swagger }
-
+    defaults: { _controller: nelmio_api_doc.controller.swagger_ui }

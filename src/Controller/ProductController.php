@@ -11,17 +11,53 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use App\Representation\Products;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use Swagger\Annotations as SWG;
 
 
 class ProductController extends AbstractController
 {
     /**
+     * DETAILS OF THE SELECTED PRODUCT
+     *
      * @Rest\Get(
      *     path = "/product/{id}",
      *     name="product_show",
      *     requirements = {"id"="\d+"}
      * )
-     * @Rest\View
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns the selected product",
+     *     @SWG\Schema(ref=@Model(type=Product::class))
+     * )
+     * @SWG\Response(
+     *     response="401",
+     *     description="Invalid Token",
+     * )
+     * @SWG\Response(
+     *     response="404",
+     *     description="Product not found or does not exist",
+     * )
+     * @SWG\Parameter(
+     *     name="id",
+     *     in="path",
+     *     description="The product id.",
+     *     required=true,
+     *     type="string"
+     * )
+     * @SWG\Parameter(
+     *     name="Authorization",
+     *     in="header",
+     *     default="Bearer Token",
+     *     description="Bearer {your access token}",
+     *     required=true,
+     *     type="string"
+     * )
+     * @SWG\Tag(name="Products")
+     * @Security(name="Bearer")
+     * @Rest\View(statusCode= 200)
      * @param Product $product
      * @return Product
      */
@@ -31,44 +67,67 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Rest\Get("/product_list", name="product_list")
+     * PRODUCTS LIST
+     *
+     * @Rest\Get("/product_list",
+     *          name="product_list")
+     *
      * @Rest\QueryParam(
      *     name="keyword",
      *     requirements="[a-zA-Z0-9]",
      *     nullable=true,
-     *     description="Le mot clé a chercher."
+     *     description="The key word to look for"
      * )
      * @Rest\QueryParam(
      *     name="order",
      *     requirements="asc|desc",
      *     default="asc",
-     *     description="Ordre croissant ou décroissant"
+     *     description="Ascending or descending order"
      * )
      * @Rest\QueryParam(
      *     name="limit",
      *     requirements="\d+",
      *     default="10",
-     *     description="Le nombre maximale de produit par page."
+     *     description="The maximum number of products per page"
      * )
      * @Rest\QueryParam(
      *     name="offset",
      *     requirements="\d+",
      *     default="1",
-     *     description="L'index de l'élément par lequel on commence"
+     *     description="The index of the element by which to start"
      * )
-     * @Rest\View
+     * @Rest\View(statusCode= 200)
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Return the list of products",
+     *     @SWG\Schema(ref=@Model(type=Product::class))
+     * )
+     * @SWG\Response(
+     *     response="401",
+     *     description="Invalid Token",
+     * )
+     * @SWG\Parameter(
+     *     name="Authorization",
+     *     in="header",
+     *     default="Bearer Token",
+     *     description="Bearer {your access token}",
+     *     required=true,
+     *     type="string"
+     * )
+     * @SWG\Tag(name="Products")
+     * @Security(name="Bearer")
      * @param ParamFetcherInterface $paramFetcher
      * @return Products
      */
-    public function listProduct(ParamFetcherInterface $paramFetcher){
-        //$product = $this->getDoctrine()->getRepository(Products::class)->findAll();
-        //return $product;
-        $pager = $this->getDoctrine()->getRepository(Product::class)->search(
-            $paramFetcher->get('keyword'),
-            $paramFetcher->get('order'),
-            $paramFetcher->get('limit'),
-            $paramFetcher->get('offset')
+    public function listProduct(ParamFetcherInterface $paramFetcher)
+    {
+        $pager = $this->getDoctrine()->getRepository( Product::class )->search(
+            $paramFetcher->get( 'keyword' ),
+            $paramFetcher->get( 'order' ),
+            $paramFetcher->get( 'limit' ),
+            $paramFetcher->get( 'offset' )
         );
-        return new Products($pager);
+        return new Products( $pager );
     }
 }
