@@ -13,6 +13,7 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use App\Representation\Products;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Swagger\Annotations as SWG;
 
 

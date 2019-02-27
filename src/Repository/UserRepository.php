@@ -19,11 +19,11 @@ class UserRepository extends AbstractRepository
         $qb = $this
             ->createQueryBuilder('a')
             ->select('a')
-            ->orderBy('a.username', $order)
+            ->orderBy('a.firstName', $order)
         ;
         if ($term) {
             $qb
-                ->where('a.username LIKE ?1')
+                ->where('a.firstName LIKE ?1')
                 ->setParameter(1, '%'.$term.'%')
             ;
         }

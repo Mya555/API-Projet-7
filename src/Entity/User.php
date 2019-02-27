@@ -3,7 +3,6 @@
 
 namespace App\Entity;
 
-use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\ExclusionPolicy;
@@ -13,7 +12,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @ORM\Table(name="fos_user")
+ * @ORM\Table(name="users")
  * @ExclusionPolicy("all")
  *
  * @Hateoas\Relation(
@@ -24,9 +23,10 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *     )
  * )
  *@Hateoas\Relation(
- *     "login_check",
+ *     "show",
  *     href=@Hateoas\Route(
- *     "login_check",
+ *     "show_user",
+ *     parameters={ "id" = "expr(object.getId())"},
  *     absolute = true
  *     )
  * )
@@ -39,29 +39,130 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *     )
  * )
  * @Hateoas\Relation(
- *     "active_profile",
- *     href="expr('http://localhost:8000/active_profile_user')"
- *     )
- * )
- * @Hateoas\Relation(
  *     "register",
- *     href="expr('http://localhost:8000/register')"
+ *     href=@Hateoas\Route(
+ *     "register_user",
+ *     absolute = true
  *     )
  * )
  */
-class User extends BaseUser
+class User
 {
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Expose
+     * @Serializer\Expose()
      */
     protected $id;
 
-    public function __construct()
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Serializer\Expose()
+     */
+    private $firstName;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Serializer\Expose()
+     */
+    private $lastName;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Serializer\Expose()
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(type="integer", length=255)
+     * @Serializer\Expose()
+     */
+    private $phone;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="users")
+     */
+    private $client;
+
+    /**
+     * @return mixed
+     */
+    public function getId()
     {
-        parent::__construct();
-        // your own logic
+        return $this->id;
     }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(string $firstName): self
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(string $lastName): self
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(string $phone): self
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
+     * @param mixed $client
+     */
+    public function setClient($client): void
+    {
+        $this->client = $client;
+    }
+
 }

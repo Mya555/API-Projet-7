@@ -1,20 +1,19 @@
 
-login_check:
-    path: /login_check
-    methods: [POST]
-
-fos_user_security:
-    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
-
-fos_user_profile:
-    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
-    prefix: /active_profile_user
-
-fos_user_register:
-    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
-    prefix: /register
-
 app.swagger_ui:
     path: /api/doc
     methods: GET
     defaults: { _controller: nelmio_api_doc.controller.swagger_ui }
+
+login_check:
+    path: /login_check
+    methods: [POST]
+
+register:
+    path: /register
+    controller: App\Controller\ClientController::register
+    methods: POST
+
+api:
+    path: /api
+    controller: App\Controller\ClientController::api
+
