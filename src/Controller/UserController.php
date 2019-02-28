@@ -1,15 +1,14 @@
 <?php
-
 namespace App\Controller;
-
+use App\Entity\Client;
 use FOS\RestBundle\Request\ParamFetcherInterface;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use FOS\RestBundle\Controller\Annotations as Rest;
-use FOS\RestBundle\Controller\FOSRestController;
 use App\Representation\Users;
 use App\Entity\Product;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
@@ -19,11 +18,51 @@ use Symfony\Component\Routing\Annotation\Route;
 use Swagger\Annotations as SWG;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
-
-
-class AuthController extends AbstractController
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+/**
+ * @property TokenStorageInterface tokenStorage
+ */
+class UserController extends AbstractController
 {
-
+    /**
+     * @var EntityManagerInterface
+     */
+    private $manager;
+    /**
+     * @var TokenStorageInterface
+     */
+    private $tokenStorage;
+    /**
+     * UserController constructor.
+     * @param EntityManagerInterface $manager
+     * @param TokenStorageInterface $tokenStorage
+     */
+    public function __construct(EntityManagerInterface $manager, TokenStorageInterface $tokenStorage)
+    {
+        $this->manager = $manager;
+        $this->tokenStorage = $tokenStorage;
+    }
+    /**
+     * @Rest\Post(
+     *     path = "/add_user",
+     *     name="add_user",
+     *     requirements = {"id"="\d+"}
+     * )
+     * @param Request $request
+     * @return Response
+     */
+    public function addUser(Request $request){
+        $user = new User();
+        $user->setFirstName($request->get('firstName'))
+            ->setLastName($request->get('lastName'))
+            ->setEmail($request->get('email'))
+            ->setPhone($request->get('phone'))
+            ->setClient($this->tokenStorage->getToken()->getUser());
+        $this->manager->persist($user);
+        $this->manager->flush();
+        return new Response(sprintf('Client %s successfully created', $user->getFirstName()));
+    }
     /**
      * DETAILS OF THE SELECTED USER
      *
@@ -71,8 +110,6 @@ class AuthController extends AbstractController
     {
         return $user;
     }
-
-
     /**
      * USERS LIST
      *
@@ -128,7 +165,6 @@ class AuthController extends AbstractController
      */
     public function listUser(ParamFetcherInterface $paramFetcher)
     {
-
         $pager = $this->getDoctrine()->getRepository( User::class )->search(
             $paramFetcher->get( 'keyword' ),
             $paramFetcher->get( 'order' ),
@@ -137,8 +173,6 @@ class AuthController extends AbstractController
         );
         return new Users( $pager );
     }
-
-
     /**
      * DELETING THE USER
      *
@@ -190,5 +224,4 @@ class AuthController extends AbstractController
         $em->flush();
         return;
     }
-
 }

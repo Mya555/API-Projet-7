@@ -22,8 +22,8 @@ class ProductController extends AbstractController
      * DETAILS OF THE SELECTED PRODUCT
      *
      * @Rest\Get(
-     *     path = "/product/{id}",
-     *     name="product_show",
+     *     path = "/show_product/{id}",
+     *     name="show_product",
      *     requirements = {"id"="\d+"}
      * )
      *
@@ -69,8 +69,8 @@ class ProductController extends AbstractController
     /**
      * PRODUCTS LIST
      *
-     * @Rest\Get("/product_list",
-     *          name="product_list")
+     * @Rest\Get("/list_product",
+     *          name="list_product")
      *
      * @Rest\QueryParam(
      *     name="keyword",

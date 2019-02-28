@@ -19,7 +19,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *     "list",
  *     href=@Hateoas\Route(
- *     "product_list",
+ *     "list_product",
  *     absolute = true
  *     )
  * )
@@ -27,7 +27,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *     "self",
  *     href=@Hateoas\Route(
- *     "product_show",
+ *     "show_product",
  *     parameters={ "id" = "expr(object.getId())"},
  *     absolute = true
  *     )
