@@ -25,6 +25,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
  */
 class UserController extends AbstractController
 {
+
     /**
      * @var EntityManagerInterface
      */
@@ -33,6 +34,8 @@ class UserController extends AbstractController
      * @var TokenStorageInterface
      */
     private $tokenStorage;
+
+
     /**
      * UserController constructor.
      * @param EntityManagerInterface $manager
@@ -44,11 +47,41 @@ class UserController extends AbstractController
         $this->tokenStorage = $tokenStorage;
     }
     /**
+     * ADD A NEW USER
+     *
      * @Rest\Post(
      *     path = "/add_user",
-     *     name="add_user",
-     *     requirements = {"id"="\d+"}
+     *     name="add_user"
      * )
+     * @SWG\Response(
+     *     response=201,
+     *     description="Create user",
+     * )
+     * @SWG\Response(
+     *     response="401",
+     *     description="Invalid Token",
+     * )
+     * @SWG\Response(
+     *     response="400",
+     *     description="A violation is raised by validation",
+     * )
+     * @SWG\Parameter(
+     *     name="Authorization",
+     *     in="header",
+     *     default="Bearer Token",
+     *     description="Bearer {your access token}",
+     *     required=true,
+     *     type="string"
+     * )
+     * @SWG\Parameter(
+     *     name="body",
+     *     in="body",
+     *     @SWG\Schema(type="object",
+     *          @SWG\Property(property="user", ref=@Model(type=User::class)))
+     *)
+     * @SWG\Tag(name="Users")
+     *
+     * @Rest\View(statusCode=201)
      * @param Request $request
      * @return Response
      */
@@ -58,11 +91,12 @@ class UserController extends AbstractController
             ->setLastName($request->get('lastName'))
             ->setEmail($request->get('email'))
             ->setPhone($request->get('phone'))
-            ->setClient($this->tokenStorage->getToken()->getUser());
+            ->setClient($this->tokenStorage->getToken()->getUser()->getUsername());
         $this->manager->persist($user);
         $this->manager->flush();
         return new Response(sprintf('Client %s successfully created', $user->getFirstName()));
     }
+
     /**
      * DETAILS OF THE SELECTED USER
      *
@@ -110,6 +144,7 @@ class UserController extends AbstractController
     {
         return $user;
     }
+
     /**
      * USERS LIST
      *
@@ -173,6 +208,7 @@ class UserController extends AbstractController
         );
         return new Users( $pager );
     }
+
     /**
      * DELETING THE USER
      *

@@ -21,7 +21,7 @@ use JMS\Serializer\Annotation\Expose;
  * @Hateoas\Relation(
  *     "register",
  *     href=@Hateoas\Route(
- *     "register_client",
+ *     "add_client",
  *     absolute = true
  *     )
  * )
@@ -29,7 +29,7 @@ use JMS\Serializer\Annotation\Expose;
  * @Hateoas\Relation(
  *     "api",
  *     href=@Hateoas\Route(
- *     "api",
+ *     "current_client",
  *     absolute = true
  *     )
  * )

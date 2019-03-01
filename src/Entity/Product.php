@@ -10,6 +10,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
 
 
 /**
+ * @ORM\Table(name="products")
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
  * @ExclusionPolicy("all")
  * @Hateoas\Relation(
