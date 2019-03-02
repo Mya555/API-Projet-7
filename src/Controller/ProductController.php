@@ -14,6 +14,7 @@ use App\Representation\Products;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Swagger\Annotations as SWG;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 
 
 class ProductController extends AbstractController
@@ -58,6 +59,7 @@ class ProductController extends AbstractController
      * @SWG\Tag(name="Products")
      * @Security(name="Bearer")
      * @Rest\View(statusCode= 200)
+     * @Cache(expires="tomorrow", public=true)
      * @param Product $product
      * @return Product
      */
@@ -117,6 +119,7 @@ class ProductController extends AbstractController
      * )
      * @SWG\Tag(name="Products")
      * @Security(name="Bearer")
+     * @Cache(expires="tomorrow", public=true)
      * @param ParamFetcherInterface $paramFetcher
      * @return Products
      */

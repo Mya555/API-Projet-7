@@ -20,6 +20,7 @@ use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 /**
  * @property TokenStorageInterface tokenStorage
  */
@@ -137,6 +138,7 @@ class UserController extends AbstractController
      * )
      * @SWG\Tag(name="Users")
      * @Security(name="Bearer")
+     * @Cache(expires="tomorrow", public=true)
      * @param User $user
      * @return User
      */
@@ -195,6 +197,7 @@ class UserController extends AbstractController
      * )
      * @SWG\Tag(name="Users")
      * @Security(name="Bearer")
+     * @Cache(expires="tomorrow", public=true)
      * @param ParamFetcherInterface $paramFetcher
      * @return Users
      */
