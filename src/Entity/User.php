@@ -72,6 +72,7 @@ class User
     private $phone;
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="users")
+     * @Serializer\Expose()
      */
     private $client;
     /**
