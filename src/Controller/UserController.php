@@ -80,7 +80,7 @@ class UserController extends AbstractController
      *          @SWG\Property(property="user", ref=@Model(type=User::class)))
      *)
      * @SWG\Tag(name="Users")
-     *
+     * @Security(name="Bearer")
      * @Rest\View(statusCode=201)
      * @param Request $request
      * @return Response
@@ -91,7 +91,7 @@ class UserController extends AbstractController
             ->setLastName($request->get('lastName'))
             ->setEmail($request->get('email'))
             ->setPhone($request->get('phone'))
-            ->setClient($this->tokenStorage->getToken()->getUser()->getUsername());
+            ->setClient($this->tokenStorage->getToken()->getUser());
         $this->manager->persist($user);
         $this->manager->flush();
         return new Response(sprintf('Client %s successfully created', $user->getFirstName()));
