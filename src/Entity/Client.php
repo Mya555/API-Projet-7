@@ -18,21 +18,6 @@ use JMS\Serializer\Annotation\Expose;
  *     absolute = true
  *     )
  * )
- * @Hateoas\Relation(
- *     "register",
- *     href=@Hateoas\Route(
- *     "add_client",
- *     absolute = true
- *     )
- * )
- *
- * @Hateoas\Relation(
- *     "api",
- *     href=@Hateoas\Route(
- *     "current_client",
- *     absolute = true
- *     )
- * )
  */
 class Client implements UserInterface
 {
