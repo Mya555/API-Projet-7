@@ -4,7 +4,7 @@ nelmio_api_doc:
         schemes: [http, https]
         info:
             title: BileMo App
-            description: This is an awesome app!
+            description: TECHNICAL SPECIFICATION
             version: 1.0.0
         securityDefinitions:
             Bearer:

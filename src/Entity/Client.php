@@ -1,11 +1,14 @@
 <?php
+
 namespace App\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
+
 /**
  * @ORM\Table(name="clients")
  * @ORM\Entity
@@ -42,10 +45,16 @@ class Client implements UserInterface
      * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="client")
      */
     private $users;
+
+    /**
+     * Client constructor.
+     * @param $username
+     */
     public function __construct($username)
     {
         $this->username = $username;
     }
+
     /**
      * @return mixed
      */
@@ -53,6 +62,7 @@ class Client implements UserInterface
     {
         return $this->id;
     }
+
     /**
      * @param mixed $id
      */
@@ -60,6 +70,7 @@ class Client implements UserInterface
     {
         $this->id = $id;
     }
+
     /**
      * @return mixed
      */
@@ -67,6 +78,7 @@ class Client implements UserInterface
     {
         return $this->users;
     }
+
     /**
      * @param mixed $users
      */
@@ -74,26 +86,47 @@ class Client implements UserInterface
     {
         $this->users = $users;
     }
+
+    /**
+     * @return string
+     */
     public function getUsername()
     {
         return $this->username;
     }
+
+    /**
+     * @return string|null
+     */
     public function getSalt()
     {
         return null;
     }
+
+    /**
+     * @return string
+     */
     public function getPassword()
     {
         return $this->password;
     }
+
+    /**
+     * @param $password
+     */
     public function setPassword($password)
     {
         $this->password = $password;
     }
+
+    /**
+     * @return array
+     */
     public function getRoles()
     {
         return array('ROLE_CLIENT');
     }
+
     public function eraseCredentials()
     {
     }

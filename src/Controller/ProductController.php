@@ -17,10 +17,14 @@ use Swagger\Annotations as SWG;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 
 
+/**
+ * Class ProductController
+ * @package App\Controller
+ */
 class ProductController extends AbstractController
 {
     /**
-     * DETAILS OF THE SELECTED PRODUCT
+     * DETAILS OF A SELECTED PRODUCT
      *
      * @Rest\Get(
      *     path = "/show_product/{id}",
@@ -72,7 +76,7 @@ class ProductController extends AbstractController
      * PRODUCTS LIST
      *
      * @Rest\Get("/list_product",
-     *          name="list_product")
+     *     name="list_product")
      *
      * @Rest\QueryParam(
      *     name="keyword",
@@ -84,7 +88,7 @@ class ProductController extends AbstractController
      *     name="order",
      *     requirements="asc|desc",
      *     default="asc",
-     *     description="Ascending or descending order"
+     *     description="Ascending order"
      * )
      * @Rest\QueryParam(
      *     name="limit",
@@ -96,7 +100,7 @@ class ProductController extends AbstractController
      *     name="offset",
      *     requirements="\d+",
      *     default="1",
-     *     description="The index of the element by which to start"
+     *     description="The index of the element to start with"
      * )
      * @Rest\View(statusCode= 200)
      *

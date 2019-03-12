@@ -10,14 +10,18 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Faker;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+/**
+ * Class AppFixtures
+ * @package App\DataFixtures
+ */
 class AppFixtures extends Fixture
 {
     private $encoder;
 
-     public function __construct(UserPasswordEncoderInterface $encoder)
-     {
-         $this->encoder = $encoder;
-     }
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
 
     /**
      * @param ObjectManager $manager
@@ -26,6 +30,7 @@ class AppFixtures extends Fixture
     {
         $faker = Faker\Factory::create( 'fr_FR' );
 
+        //FIXTURES FOR PRODUCT ENTITY
         for ($i = 0; $i < 20; $i++) {
             $product = new Product();
             $product->setProductName( $faker->word );
@@ -35,19 +40,19 @@ class AppFixtures extends Fixture
             $manager->persist( $product );
         }
 
-
-        $client = new Client('janeDoe');
-        $client->setPassword($this->encoder->encodePassword($client, 'password'));
+        //FIXTURES FOR CLIENT ENTITY
+        $client = new Client( 'janeDoe' );
+        $client->setPassword( $this->encoder->encodePassword( $client, 'password' ) );
         $manager->persist( $client );
 
-
-        for($i = 0; $i < 15; $i++){
+        //FIXTURES FOR USER ENTITY
+        for ($i = 0; $i < 15; $i++) {
             $user = new User();
-            $user->setFirstName($faker->firstName);
-            $user->setLastName($faker->lastName);
-            $user->setPhone($faker->phoneNumber);
-            $user->setEmail($faker->email);
-            $user->setClient($client);
+            $user->setFirstName( $faker->firstName );
+            $user->setLastName( $faker->lastName );
+            $user->setPhone( $faker->phoneNumber );
+            $user->setEmail( $faker->email );
+            $user->setClient( $client );
             $manager->persist( $user );
         }
 

@@ -14,10 +14,6 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
  * @ExclusionPolicy("all")
  * @Hateoas\Relation(
- *     "authenticated_user",
- *     embedded = @Hateoas\Embedded("expr(service('security.token_storage').getToken().getUser())")
- * )
- * @Hateoas\Relation(
  *     "list",
  *     href=@Hateoas\Route(
  *     "list_product",
@@ -40,7 +36,7 @@ class Product
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     *  @Expose
+     * @Expose
      */
     private $id;
 
@@ -68,16 +64,26 @@ class Product
      */
     private $productBrand;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getProductName(): ?string
     {
         return $this->productName;
     }
 
+    /**
+     * @param string $productName
+     * @return Product
+     */
     public function setProductName(string $productName): self
     {
         $this->productName = $productName;
@@ -85,11 +91,18 @@ class Product
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getProductPrice(): ?int
     {
         return $this->productPrice;
     }
 
+    /**
+     * @param int $productPrice
+     * @return Product
+     */
     public function setProductPrice(int $productPrice): self
     {
         $this->productPrice = $productPrice;
@@ -97,11 +110,18 @@ class Product
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getProductDescription(): ?string
     {
         return $this->productDescription;
     }
 
+    /**
+     * @param string $productDescription
+     * @return Product
+     */
     public function setProductDescription(string $productDescription): self
     {
         $this->productDescription = $productDescription;
@@ -109,11 +129,18 @@ class Product
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getProductBrand(): ?string
     {
         return $this->productBrand;
     }
 
+    /**
+     * @param string $productBrand
+     * @return Product
+     */
     public function setProductBrand(string $productBrand): self
     {
         $this->productBrand = $productBrand;

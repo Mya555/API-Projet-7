@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Controller;
+
 use App\Entity\Client;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -21,8 +23,10 @@ use Nelmio\ApiDocBundle\Annotation\Security;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+
 /**
- * @property TokenStorageInterface tokenStorage
+ * Class UserController
+ * @package App\Controller
  */
 class UserController extends AbstractController
 {
@@ -47,6 +51,7 @@ class UserController extends AbstractController
         $this->manager = $manager;
         $this->tokenStorage = $tokenStorage;
     }
+
     /**
      * ADD A NEW USER
      *
@@ -86,20 +91,21 @@ class UserController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function addUser(Request $request){
+    public function addUser(Request $request)
+    {
         $user = new User();
-        $user->setFirstName($request->get('firstName'))
-            ->setLastName($request->get('lastName'))
-            ->setEmail($request->get('email'))
-            ->setPhone($request->get('phone'))
-            ->setClient($this->tokenStorage->getToken()->getUser());
-        $this->manager->persist($user);
+        $user->setFirstName( $request->get( 'firstName' ) )
+            ->setLastName( $request->get( 'lastName' ) )
+            ->setEmail( $request->get( 'email' ) )
+            ->setPhone( $request->get( 'phone' ) )
+            ->setClient( $this->tokenStorage->getToken()->getUser() );
+        $this->manager->persist( $user );
         $this->manager->flush();
-        return new Response(sprintf('Client %s successfully created', $user->getFirstName()));
+        return new Response( sprintf( 'Client %s successfully created', $user->getFirstName() ) );
     }
 
     /**
-     * DETAILS OF THE SELECTED USER
+     * DETAILS OF A SELECTED USER
      *
      * @Rest\Get(
      *     path = "/show_user/{id}",
@@ -162,7 +168,7 @@ class UserController extends AbstractController
      *     name="order",
      *     requirements="asc|desc",
      *     default="asc",
-     *     description="Ascending or descending order"
+     *     description="Ascending order"
      * )
      * @Rest\QueryParam(
      *     name="limit",
@@ -174,7 +180,7 @@ class UserController extends AbstractController
      *     name="offset",
      *     requirements="\d+",
      *     default="1",
-     *     description="The index of the element by which to start"
+     *     description="The index of the element to start with"
      * )
      * @Rest\View(statusCode= 200)
      *
@@ -213,7 +219,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * DELETING THE USER
+     * DELETE A USER
      *
      * @Rest\Delete(
      *     path="/delete_user/{id}",

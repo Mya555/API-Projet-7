@@ -14,48 +14,24 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class UserRepository extends AbstractRepository
 {
+    /**
+     * @param $term
+     * @param string $order
+     * @param int $limit
+     * @param int $offset
+     * @return \Pagerfanta\Pagerfanta
+     */
     public function search($term, $order = 'asc', $limit = 20, $offset = 0)
     {
         $qb = $this
-            ->createQueryBuilder('a')
-            ->select('a')
-            ->orderBy('a.firstName', $order)
-        ;
+            ->createQueryBuilder( 'a' )
+            ->select( 'a' )
+            ->orderBy( 'a.firstName', $order );
         if ($term) {
             $qb
-                ->where('a.firstName LIKE ?1')
-                ->setParameter(1, '%'.$term.'%')
-            ;
+                ->where( 'a.firstName LIKE ?1' )
+                ->setParameter( 1, '%' . $term . '%' );
         }
-        return $this->paginate($qb, $limit, $offset);
+        return $this->paginate( $qb, $limit, $offset );
     }
-
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?User
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

@@ -1,10 +1,13 @@
 <?php
+
 namespace App\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use Hateoas\Configuration\Annotation as Hateoas;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="users")
@@ -17,7 +20,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *     absolute = true
  *     )
  * )
- *@Hateoas\Relation(
+ * @Hateoas\Relation(
  *     "show",
  *     href=@Hateoas\Route(
  *     "show_user",
@@ -75,6 +78,7 @@ class User
      * @Serializer\Expose()
      */
     private $client;
+
     /**
      * @return mixed
      */
@@ -82,6 +86,7 @@ class User
     {
         return $this->id;
     }
+
     /**
      * @param mixed $id
      */
@@ -89,42 +94,79 @@ class User
     {
         $this->id = $id;
     }
+
+    /**
+     * @return string|null
+     */
     public function getFirstName(): ?string
     {
         return $this->firstName;
     }
+
+    /**
+     * @param string $firstName
+     * @return User
+     */
     public function setFirstName(string $firstName): self
     {
         $this->firstName = $firstName;
         return $this;
     }
+
+    /**
+     * @return string|null
+     */
     public function getLastName(): ?string
     {
         return $this->lastName;
     }
+
+    /**
+     * @param string $lastName
+     * @return User
+     */
     public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
         return $this;
     }
+
+    /**
+     * @return string|null
+     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
+
+    /**
+     * @param string $email
+     * @return User
+     */
     public function setEmail(string $email): self
     {
         $this->email = $email;
         return $this;
     }
+
+    /**
+     * @return string|null
+     */
     public function getPhone(): ?string
     {
         return $this->phone;
     }
+
+    /**
+     * @param string $phone
+     * @return User
+     */
     public function setPhone(string $phone): self
     {
         $this->phone = $phone;
         return $this;
     }
+
     /**
      * @return mixed
      */
@@ -132,6 +174,7 @@ class User
     {
         return $this->client;
     }
+
     /**
      * @param mixed $client
      */
