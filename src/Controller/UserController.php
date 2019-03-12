@@ -101,7 +101,7 @@ class UserController extends AbstractController
             ->setClient( $this->tokenStorage->getToken()->getUser() );
         $this->manager->persist( $user );
         $this->manager->flush();
-        return new Response( sprintf( 'Client %s successfully created', $user->getFirstName() ) );
+        return $user;
     }
 
     /**
@@ -150,7 +150,10 @@ class UserController extends AbstractController
      */
     public function showUser(User $user)
     {
-        return $user;
+        if ($user->getClient() == ($this->tokenStorage->getToken()->getUser())) {
+            return $user;
+        }
+        throw $this->createAccessDeniedException( 'You can access only your users' );
     }
 
     /**
@@ -213,7 +216,8 @@ class UserController extends AbstractController
             $paramFetcher->get( 'keyword' ),
             $paramFetcher->get( 'order' ),
             $paramFetcher->get( 'limit' ),
-            $paramFetcher->get( 'offset' )
+            $paramFetcher->get( 'offset' ),
+            $this->tokenStorage->getToken()->getUser()
         );
         return new Users( $pager );
     }
@@ -264,9 +268,12 @@ class UserController extends AbstractController
      */
     public function deleteUser(User $user)
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove( $user );
-        $em->flush();
-        return;
+        if ($user->getClient() == ($this->tokenStorage->getToken()->getUser())) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove( $user );
+            $em->flush();
+            return;
+        }
+        throw $this->createAccessDeniedException( 'You can access only your users' );
     }
 }

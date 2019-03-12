@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Client;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -19,9 +20,10 @@ class UserRepository extends AbstractRepository
      * @param string $order
      * @param int $limit
      * @param int $offset
+     * @param Client $client
      * @return \Pagerfanta\Pagerfanta
      */
-    public function search($term, $order = 'asc', $limit = 20, $offset = 0)
+    public function search($term, $order = 'asc', $limit = 20, $offset = 0, Client $client = null)
     {
         $qb = $this
             ->createQueryBuilder( 'a' )
@@ -31,6 +33,10 @@ class UserRepository extends AbstractRepository
             $qb
                 ->where( 'a.firstName LIKE ?1' )
                 ->setParameter( 1, '%' . $term . '%' );
+        }
+        if ($client != null){
+            $qb->andWhere('a.client= ?2')
+                ->setParameter( 2, $client);
         }
         return $this->paginate( $qb, $limit, $offset );
     }

@@ -15,8 +15,11 @@ abstract class AbstractRepository extends EntityRepository
 {
     protected function paginate(QueryBuilder $qb, $limit = 20, $offset = 0)
     {
-        if (0 == $limit || 0 == $offset) {
-            throw new \LogicException( '$limit & $offstet must be greater than 0.' );
+        if (0 >= $limit || 0 > $offset) {
+            throw new \LogicException( '$limit & $offset must be greater than 0.' );
+        }
+        if($offset > 100 ){
+            throw new \LogicException( '$offset must be smaller than 100.' );
         }
 
         $pager = new Pagerfanta( new DoctrineORMAdapter( $qb ) );

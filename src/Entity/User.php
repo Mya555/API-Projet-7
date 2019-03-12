@@ -69,7 +69,7 @@ class User
      */
     private $email;
     /**
-     * @ORM\Column(type="integer", length=255)
+     * @ORM\Column(type="string", length=255)
      * @Serializer\Expose()
      */
     private $phone;
