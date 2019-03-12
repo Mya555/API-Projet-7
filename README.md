@@ -1,13 +1,9 @@
-
-# BileMo-Projet-7
-
+<h1>BileMo-Projet-7</h1>
 <p>The project is created for the curcus of OpenClassrooms.</p>
 <p>The project must be created about the development of the website for selling BileMo company's products with using API REST.
 </p>
 <p>Developed with API REST.</p>
-
-# How to install the project
-
+<h1>How to install the project</h1>
 <h4>1 - Download or clone the repository git</h4>
 <pre><code>https://github.com/Mya555/API-Projet-7.git</pre></code>
 
@@ -37,8 +33,7 @@ $ openssl rsa -pubout -in var/jwt/private.pem -out var/jwt/public.pem
 
 <h4>9 - Documentation :</h4>
 <pre><code>{your_domain}/api/doc</pre></code>
-
-# Existing users
+<h1>Existing users</h1>
 <table>
 <thead>
   <tr>
