@@ -1,3 +1,6 @@
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d510a56b93ad44109e89853298c299b8)](https://app.codacy.com/app/Mya555/API-Projet-7?utm_source=github.com&utm_medium=referral&utm_content=Mya555/API-Projet-7&utm_campaign=Badge_Grade_Dashboard)
+
 <h1>BileMo-Projet-7</h1>
 <p>The project is created for the curcus of OpenClassrooms.</p>
 <p>The project must be created about the development of the website for selling BileMo company's products with using API REST.
