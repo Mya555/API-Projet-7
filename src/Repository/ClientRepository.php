@@ -32,15 +32,15 @@ class ClientRepository extends ServiceEntityRepository
      */
     public function search($term, $order = 'asc', $limit = 20, $offset = 0)
     {
-        $qb = $this
+        $queryBuilder = $this
             ->createQueryBuilder( 'a' )
             ->select( 'a' )
             ->orderBy( 'a.username', $order );
         if ($term) {
-            $qb
+            $queryBuilder
                 ->where( 'a.username LIKE ?1' )
                 ->setParameter( 1, '%' . $term . '%' );
         }
-        return $this->paginate( $qb, $limit, $offset );
+        return $this->paginate( $queryBuilder, $limit, $offset );
     }
 }

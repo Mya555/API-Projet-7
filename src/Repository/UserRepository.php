@@ -25,19 +25,19 @@ class UserRepository extends AbstractRepository
      */
     public function search($term, $order = 'asc', $limit = 20, $offset = 0, Client $client = null)
     {
-        $qb = $this
+        $queryBuilder = $this
             ->createQueryBuilder( 'a' )
             ->select( 'a' )
             ->orderBy( 'a.firstName', $order );
         if ($term) {
-            $qb
+            $queryBuilder
                 ->where( 'a.firstName LIKE ?1' )
                 ->setParameter( 1, '%' . $term . '%' );
         }
         if ($client != null){
-            $qb->andWhere('a.client= ?2')
+            $queryBuilder->andWhere('a.client= ?2')
                 ->setParameter( 2, $client);
         }
-        return $this->paginate( $qb, $limit, $offset );
+        return $this->paginate( $queryBuilder, $limit, $offset );
     }
 }

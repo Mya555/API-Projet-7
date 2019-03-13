@@ -13,7 +13,7 @@ use Pagerfanta\Pagerfanta;
  */
 abstract class AbstractRepository extends EntityRepository
 {
-    protected function paginate(QueryBuilder $qb, $limit = 20, $offset = 0)
+    protected function paginate(QueryBuilder $queryBuilder, $limit = 20, $offset = 0)
     {
         if (0 >= $limit || 0 > $offset) {
             throw new \LogicException( '$limit & $offset must be greater than 0.' );
@@ -22,7 +22,7 @@ abstract class AbstractRepository extends EntityRepository
             throw new \LogicException( '$offset must be smaller than 100.' );
         }
 
-        $pager = new Pagerfanta( new DoctrineORMAdapter( $qb ) );
+        $pager = new Pagerfanta( new DoctrineORMAdapter( $queryBuilder ) );
         $currentPage = (ceil( ($offset + 1) / $limit ));
         $pager->setCurrentPage( $currentPage );
         $pager->setMaxPerPage( (int)$limit );
