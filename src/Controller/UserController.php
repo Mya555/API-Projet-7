@@ -269,9 +269,9 @@ class UserController extends AbstractController
     public function deleteUser(User $user)
     {
         if ($user->getClient() == ($this->tokenStorage->getToken()->getUser())) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove( $user );
-            $em->flush();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove( $user );
+            $entityManager->flush();
             return;
         }
         throw $this->createAccessDeniedException( 'You can access only your users' );

@@ -35,7 +35,7 @@ class AppFixtures extends Fixture
             $product = new Product();
             $product->setProductName( $faker->word );
             $product->setProductBrand( $faker->word );
-            $product->setProductDescription( $faker->sentence( $nbWords = 6, $variableNbWords = true ) );
+            $product->setProductDescription( $faker->sentence( $nbWords = 6 ) );
             $product->setProductPrice( $faker->numberBetween( $min = 150, $max = 1000 ) );
             $manager->persist( $product );
         }
